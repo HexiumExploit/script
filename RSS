@@ -1,0 +1,242 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/discoart/FluentPlus/refs/heads/main/Beta.lua"))() 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))() 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local _0 = "1.0"
+local _1 = game:GetService("Players").LocalPlayer
+local _2 = game:GetService("RunService")
+local _3 = _0
+local _4 = { Main = { Title = "Main", Icon = "" }, Misc = { Title = "Misc", Icon = "" }, Movement = { Title = "Movement", Icon = "" }, Utility = { Title = "Utility", Icon = "" }, Settings = { Title = "Settings", Icon = "settings" } }
+local _5 = nil
+local _6 = false
+local _7 = Vector3.new(5, 5, 5)
+local _8 = Vector3.new(5, 5, 5)
+local _9 = 0.7
+local _a = { "LeftLowerArm", "RightLowerArm" }
+
+local function _b(c)
+    _6 = c
+    if _6 then
+        if _5 then _5:Disconnect() end
+        _5 = _2.Stepped:Connect(function()
+            local _d = _1.Character
+            if _d then
+                for _, _e in ipairs(_a) do
+                    local _f = _d:FindFirstChild(_e)
+                    if _f then
+                        if _e == "LeftLowerArm" then
+                            _f.Size = _7
+                        elseif _e == "RightLowerArm" then
+                            _f.Size = _8
+                        end
+                        _f.Transparency = _9
+                        _f.CanCollide = false
+                        _f.Massless = true
+                    end
+                end
+            end
+        end)
+    else
+        if _5 then _5:Disconnect() end
+        local _d = _1.Character
+        if _d then
+            for _, _e in ipairs(_a) do
+                local _f = _d:FindFirstChild(_e)
+                if _f then
+                    _f.Size = Vector3.new(1, 1, 1)
+                    _f.Transparency = 0
+                    _f.CanCollide = true
+                    _f.Massless = false
+                end
+            end
+        end
+    end
+end
+
+local _g = nil
+local _h = false
+local _i = Vector3.new(5, 5, 5)
+local _j = Vector3.new(5, 5, 5)
+local _k = { "LeftFoot", "RightFoot" }
+
+local function _l(m)
+    _h = m
+    if _h then
+        if _g then _g:Disconnect() end
+        _g = _2.Stepped:Connect(function()
+            local _n = _1.Character
+            if _n then
+                for _, _o in ipairs(_k) do
+                    local _p = _n:FindFirstChild(_o)
+                    if _p then
+                        if _o == "LeftFoot" then
+                            _p.Size = _i
+                        elseif _o == "RightFoot" then
+                            _p.Size = _j
+                        end
+                        _p.Transparency = _9
+                        _p.CanCollide = false
+                        _p.Massless = true
+                    end
+                end
+            end
+        end)
+    else
+        if _g then _g:Disconnect() end
+        local _n = _1.Character
+        if _n then
+            for _, _o in ipairs(_k) do
+                local _p = _n:FindFirstChild(_o)
+                if _p then
+                    _p.Size = Vector3.new(1, 1, 1)
+                    _p.Transparency = 0
+                    _p.CanCollide = true
+                    _p.Massless = false
+                end
+            end
+        end
+    end
+end
+
+_4.Main:AddToggle("EnableBuffon", {
+    Title = "Enable Buffon",
+    Description = "Buffon Hands",
+    Default = false,
+    Callback = _b
+})
+
+_4.Main:AddSlider("LeftHandSizeSlider", {
+    Title = "Left Hand Size",
+    Description = "Adjust left hand hitbox size.",
+    Default = 5,
+    Min = 0,
+    Max = 75,
+    Rounding = 1,
+    Callback = function(q) _7 = Vector3.new(q, q, q) end
+})
+
+_4.Main:AddSlider("RightHandSizeSlider", {
+    Title = "Right Hand Size",
+    Description = "Adjust right hand hitbox size.",
+    Default = 5,
+    Min = 0,
+    Max = 75,
+    Rounding = 1,
+    Callback = function(r) _8 = Vector3.new(r, r, r) end
+})
+
+_4.Main:AddSlider("TransparencySlider", {
+    Title = "Transparency",
+    Description = "Adjust arm/foot transparency.",
+    Default = 0.7,
+    Min = 0.1,
+    Max = 1,
+    Rounding = 2,
+    Callback = function(s) _9 = s end
+})
+
+_4.Main:AddToggle("EnableBrazilian", {
+    Title = "Enable Brazilian",
+    Description = "Brazilian Foot Hitbox",
+    Default = false,
+    Callback = _l
+})
+
+_4.Main:AddSlider("LeftFootSizeSlider", {
+    Title = "Left Foot Size",
+    Description = "Adjust left foot hitbox size.",
+    Default = 5,
+    Min = 0,
+    Max = 75,
+    Rounding = 1,
+    Callback = function(t) _i = Vector3.new(t, t, t) end
+})
+
+_4.Main:AddSlider("RightFootSizeSlider", {
+    Title = "Right Foot Size",
+    Description = "Adjust right foot hitbox size.",
+    Default = 5,
+    Min = 0,
+    Max = 75,
+    Rounding = 1,
+    Callback = function(u) _j = Vector3.new(u, u, u) end
+})
+
+_4.Misc:AddButton({
+    Title = "No Cooldown Dribbling",
+    Description = "Works only if the ball is with you.",
+    Callback = function() game:GetService("ReplicatedStorage").Remotes.Action:FireServer("Deke") end
+})
+
+_4.Misc:AddButton({
+    Title = "Bicycle Kick",
+    Description = "No cooldown.",
+    Callback = function() game:GetService("ReplicatedStorage").Remotes.Action:FireServer("BicycleKick") end
+})
+
+_4.Misc:AddButton({
+    Title = "Header",
+    Description = "No cooldown.",
+    Callback = function() game:GetService("ReplicatedStorage").Remotes.Action:FireServer("Header") end
+})
+
+local function _v(w)
+    local x = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local y = x:WaitForChild("Humanoid")
+    y.WalkSpeed = w and 50 or 20
+end
+
+_4.Movement:AddToggle("InfiniteStamina", {
+    Title = "Infinite Stamina (Don't Tap Sprint)",
+    Default = false,
+    Callback = _v
+})
+
+local z = false
+local A = 3
+local B
+
+local function C()
+    local D = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+    local E = D:WaitForChild("Humanoid")
+    B = game:GetService("RunService").Heartbeat:Connect(function()
+        if E and E.MoveDirection.Magnitude > 0 then
+            D:TranslateBy(E.MoveDirection * (A * 0.1))
+        end
+    end)
+end
+
+local function F()
+    if B then
+        B:Disconnect()
+        B = nil
+    end
+end
+
+_4.Movement:AddToggle("SpeedBoost", {
+    Title = "Speed Boost (RISKY)",
+    Default = false,
+    Callback = function(G)
+        if G then
+            C()
+        else
+            F()
+        end
+    end
+})
+
+_4.Movement:AddSlider("SpeedSlider", {
+    Title = "Speed Boost Slider",
+    Default = 3,
+    Min = 1,
+    Max = 10,
+    Rounding = 1,
+    Callback = function(H) A = H end
+})
+
+local I = os.clock()
+local J = tick()
+
+local function K(L)
+    local M = math.floor(L / 3600)
+end
